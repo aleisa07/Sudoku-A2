@@ -5,8 +5,8 @@ from src.config_xml import ConfigXML
 
 class MenuConsole():
 
-    def __init__(self):
-        self.config_xml = ConfigXML("../config.xml")
+    def __init__(self, file_path):
+        self.config_xml = ConfigXML(file_path)
 
     @property
     def menu_options(self):
@@ -119,5 +119,5 @@ class MenuConsole():
         self.display_menu_options()
 
 if __name__ == '__main__':
-    menuConsole = MenuConsole()
+    menuConsole = MenuConsole("../config.xml")
     menuConsole.main_console()
