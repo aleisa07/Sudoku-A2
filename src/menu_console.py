@@ -1,44 +1,48 @@
-import os
-from src import constant
+from src.constant import *
+import utils
 from src.config_xml import ConfigXML
+
+__author__ = 'Carlos Gonzales'
 
 
 class MenuConsole():
-
-    def __init__(self, file_path):
-        self.config_xml = ConfigXML(file_path)
+    def __init__(self):
+        """Constructor of MenuConsole class that initialize the ConfigXML class
+        in order to read the config.xml"""
+        self.config_xml = ConfigXML()
 
     @property
     def menu_options(self):
-        return {'1': constant.CONFIGURATION,
-                '2': constant.GENERATE_SUDOKU,
-                '3': constant.SOLVE_SUDOKU,
-                '4': constant.EXIT}
+        return {'1': MENU_CONFIGURATION,
+                '2': MENU_GENERATE_SUDOKU,
+                '3': MENU_SOLVE_SUDOKU,
+                '4': MENU_EXIT}
 
     @property
     def config_options(self):
-        return {'1': constant.SET_OUTPUT,
-                '2': constant.SET_DIFFICULTY,
-                '3': constant.SET_ALGORITHM,
-                '4': constant.BACK}
+        return {'1': MENU_SET_OUTPUT,
+                '2': MENU_SET_DIFFICULTY,
+                '3': MENU_SET_ALGORITHM,
+                '4': MENU_BACK}
 
     @property
     def difficulty_levels(self):
-        return {'1': constant.EASY,
-                '2': constant.MEDIUM,
-                '3': constant.HARD,
-                '4': constant.CUSTOM,
-                '5': constant.BACK}
+        return {'1': LEVEL_EASY,
+                '2': LEVEL_MEDIUM,
+                '3': LEVEL_HARD,
+                '4': LEVEL_CUSTOM,
+                '5': MENU_BACK}
 
     @property
     def algorithm_options(self):
-        return {'1': constant.ALGORITHM_BACKTRACKING,
-                '2': constant.ALGORITHM_NORVING,
-                '3': constant.BACK}
+        return {'1': ALGORITHM_BACKTRACKING,
+                '2': ALGORITHM_NORVIG,
+                '3': MENU_BACK}
 
     def display_menu_options(self):
-        self.print_options_map(self.menu_options)
-        option_number = int(raw_input("\nPlease select an option: "))
+        """Method that display the menu options initial by console"""
+        utils.print_key_and_values_from_a_dictionary(self.menu_options)
+        option_number = int(raw_input(MESSAGE_SELECT_OPTION))
         menu_function = {'1': self.display_config_options,
                          '2': self.generate_sudoku,
                          '3': self.solve_sudoku,
@@ -47,12 +51,13 @@ class MenuConsole():
             function_to_call = menu_function[str(option_number)]
             function_to_call()
         else:
-            print "Choose only the options displayed in the menu. Try again"
+            print MESSAGE_SELECT_OPTION_TRY_AGAIN
             self.display_menu_options()
 
     def display_config_options(self):
-        self.print_options_map(self.config_options)
-        option_number = int(raw_input("\nPlease select an option: "))
+        """Method that display the configuration options by console"""
+        utils.print_key_and_values_from_a_dictionary(self.config_options)
+        option_number = int(raw_input(MESSAGE_SELECT_OPTION))
         config_function = {'1': self.set_output,
                            '2': self.display_algorithm_options,
                            '3': self.display_difficulty_levels,
@@ -61,63 +66,75 @@ class MenuConsole():
             function_to_call = config_function[str(option_number)]
             function_to_call()
         else:
-            print "Choose only the options displayed in the menu. Try again"
+            print MESSAGE_SELECT_OPTION_TRY_AGAIN
             self.display_config_options()
 
     def generate_sudoku(self):
+        """Method that generate a sudoku
+        Missing integration"""
         pass
 
     def solve_sudoku(self):
+        """Method that solve a sudoku
+        Missing integration"""
         pass
 
     def exit(self):
         print "Good Bye!"
 
     def set_output(self):
-        print "Current Output path", self.config_xml.get_node("value", ".//path_output")
+        """Method that set the output path according to new output path
+        typed by console"""
+        attribute = "value"
+        print "Current Output path", self.config_xml.get_node(attribute,
+                                                              XPATH_OUTPUT)
         new_output = raw_input("\nPlease enter a new path: ")
-        if self.is_valid_path(new_output):
-            self.config_xml.set_node("value", ".//path_output", new_output)
+        if utils.is_valid_path(new_output):
+            if utils.exist_path(new_output):
+                self.config_xml.set_node(attribute, XPATH_OUTPUT, new_output)
+            else:
+                print "The path does not exist"
         else:
             print "Enter a valid path"
             self.set_output()
         self.display_config_options()
 
-    def is_valid_path(self, path):
-        return os.path.isabs(path)
-
     def display_difficulty_levels(self):
-        print "Current Difficulty Level", self.config_xml.get_node("value", ".//difficulty/level")
-        self.print_options_map(self.difficulty_levels)
-        option_number = int(raw_input("\nPlease select an option: "))
+        """Method that display the difficulty levels by console"""
+        attribute = "value"
+        print "Current Difficulty Level", self.config_xml.get_node(attribute,
+                                                                   XPATH_LEVEL)
+        utils.print_key_and_values_from_a_dictionary(self.difficulty_levels)
+        option_number = int(raw_input(MESSAGE_SELECT_OPTION))
         if 1 <= option_number <= len(self.difficulty_levels):
             if option_number != len(self.difficulty_levels):
-                self.config_xml.set_node("value", ".//difficulty/level", self.difficulty_levels[str(option_number)])
+                self.config_xml.set_node(attribute, XPATH_LEVEL,
+                                         self.difficulty_levels[
+                                             str(option_number)])
             self.display_config_options()
         else:
-            print "Choose only the options displayed in the menu. Try again"
+            print MESSAGE_SELECT_OPTION_TRY_AGAIN
             self.display_difficulty_levels()
 
     def display_algorithm_options(self):
-        print "Current Algorithm", self.config_xml.get_node("value", ".//algorithm")
-        self.print_options_map(self.algorithm_options)
-        option_number = int(raw_input("\nPlease select an option: "))
+        """Method that display the algorithm options by console"""
+        attribute = "value"
+        print "Current Algorithm", self.config_xml.get_node(attribute,
+                                                            XPATH_ALGORITHM)
+        utils.print_key_and_values_from_a_dictionary(self.algorithm_options)
+        option_number = int(raw_input(MESSAGE_SELECT_OPTION))
         if 1 <= option_number <= len(self.algorithm_options):
             if option_number != len(self.algorithm_options):
-                self.config_xml.set_node("value", ".//algorithm", self.algorithm_options[str(option_number)])
+                self.config_xml.set_node(attribute, XPATH_ALGORITHM,
+                                         self.algorithm_options[
+                                             str(option_number)])
             self.display_config_options()
         else:
-            print "Choose only the options displayed in the menu. Try again"
+            print MESSAGE_SELECT_OPTION_TRY_AGAIN
             self.display_algorithm_options()
 
-    def print_options_map(self, map):
-        for key, value in map.iteritems():
-            print key, value
-
-    def main_console(self):
-        print "################ Sudoku ################"
-        self.display_menu_options()
 
 if __name__ == '__main__':
-    menuConsole = MenuConsole("../config.xml")
-    menuConsole.main_console()
+    menuConsole = MenuConsole()
+    print "################ Sudoku ################"
+    menuConsole.display_menu_options()
