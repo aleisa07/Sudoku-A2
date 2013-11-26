@@ -20,12 +20,3 @@ class AlgorithmSolver(object):
 
         """
         self.algorithm = new_algorithm
-
-    def display(self, sudoku_matrix):
-        """Method to display a Sudoku.
-
-        Keyword arguments:
-        sudoku_matrix -- Sudoku Matrix Object
-
-        """
-        self.algorithm.display(sudoku_matrix)

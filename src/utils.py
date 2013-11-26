@@ -52,14 +52,19 @@ def cross(list_a, list_b):
     return [a + b for a in list_a for b in list_b]
 
 
-def some(sequence):
-    """Return some element of sequence that is true."""
-    for e in sequence:
-        if e:
-            return e
+def get_element_exists_in_sequence(sequence):
+    """Return some element of sequence that is true.
+
+    Keyword arguments:
+    sequence -- sequence of values to search the element with true value
+
+    """
+    for element in sequence:
+        if element:
+            return element
     return False
 
 
 def generate_random_number():
-    """ Calculate a random number between 1 and 9"""
+    """Return a random number between 1 and 9"""
     return random.randint(1, 9)
