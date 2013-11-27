@@ -1,0 +1,10 @@
+<sudoku_config>
+    <type value="medium" />
+    <path_output value="c:\Test" />
+    <algorithm value="Norvig" />
+    <difficulty>
+        <level value="Easy">
+            <limits_holes max="70" min="30" />
+        </level>
+    </difficulty>
+</sudoku_config>
