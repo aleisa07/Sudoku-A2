@@ -1,73 +1,90 @@
 import random
-from grid import Grid
+from cell import Cell
+from constant import MAP_ROW
 
 class Generator():
 
+    matrix = []
+
     def __init__(self):
-        self.matrix = [[Grid() for i in range(9)] for i in range(9)]
-        self.matrix = self.generate_matrix()
+        """This class generate a matrix 9x9 with Cell Objects"""
+
+        self.generate_matrix()
 
     def generate_matrix(self):
-        pivot = 0
-        new_number = 0
-        for i in range(9):
-            if (i == 0 or i == 3 or i ==6):
-                while self.exist_number_in_column(pivot, 0):
+        """ Fill the matrix with cell objects"""
+
+        pivot = self.generate_random_number()
+        self.matrix.append(self.generate_row(pivot, 0))
+        for row in range(8):
+            if (row == 2 or row ==5):
+                while self.exist_number_in_column(pivot):
                     pivot = self.generate_random_number()
-                new_number = pivot
-            row = self.generate_row(new_number)
-            self.set_row(i, row)
-            if ((new_number + 3) > 9):
-                new_number -= 3
-                if self.exist_number_in_column(new_number, 0):
-                    new_number -= 3
             else:
-                if (self.exist_number_in_column(new_number + 3, 0)):
-                    new_number -= 3
-                else:
-                    new_number += 3
+                pivot = self.get_new_pivot(pivot)
+            self.matrix.append(self.generate_row(pivot, row))
+
+    def get_matrix_by_generation(self):
         return self.matrix
 
+    def get_new_pivot(self, pivot):
+        """ Calculate the next pivot in the row
+
+        Keyword arguments:
+        pivote  --    New posible number
+
+        return  --    New pivote calculated
+        """
+        new_pivot = pivot + 3
+        if (new_pivot > 9):
+            new_pivot = pivot - 3
+            if (self.exist_number_in_column(new_pivot)):
+                    new_pivot -= 3
+        else:
+            if (self.exist_number_in_column(new_pivot)):
+                new_pivot = pivot - 3
+                if (self.exist_number_in_column(new_pivot)):
+                    new_pivot -= 3
+
+        return new_pivot
+
     def generate_random_number(self):
+        """ Calculate random number between 1 and 9"""
         return random.randint(1, 9)
 
-    def generate_row(self, initial_number):
-        row_generated = [Grid() for i in range(9)]
-        row_generated[0].set_value(initial_number)
+    def generate_row(self, initial_number, new_row):
+        """ Generated a row of 9 Cell elements
+
+        Keyword arguments:
+        initial_number  --    Pivote to generate the row
+        new_row         --    Row position 
+
+        return  list of Cells   [Cell1, Cell2 ... Cell9]
+        """
+        row_generated = []
+        row_generated.append(Cell(initial_number, True, MAP_ROW[new_row], 0))
         new_number = initial_number + 1
-        for i in range(1, 9):
+        column = 1
+        for row in range(1, 9):
             if new_number > 9:
                 new_number = 1
-            row_generated[i].set_value(new_number)
+            row_generated.append(Cell(new_number, True, MAP_ROW[new_row], column))
             new_number += 1
+            column += 1
         return row_generated
 
-    def exist_number_in_column(self, number, column):
-        for i in range(9):
-            if int(self.matrix[i][column].get_value()) == int(number):
+    def get_matrix(self):
+        """Return the matrix generated"""
+        return self.matrix
+
+    def exist_number_in_column(self, number):
+        """Return false if the number does not in the column 0 of matrix
+
+        Keyword arguments:
+        number  --   Number to verify if exist in the column 0 of matrix
+
+        return  --   A boolean value"""
+        for row in range(len(self.matrix)):
+            if (self.matrix[row][0].get_cell_value() == number):
                 return True
         return False
-
-    def set_row(self, x, row):
-        self.matrix[x] = row
-
-    def get_grid(self, i, j):
-        return self.matrix[i][j]
-
-    def set_grid(self, x, y, value):
-        self.matrix[x][y].set_value(value)
-
-    def print_matrix(self):
-        for i in range(9):
-            var = ""
-            for j in range(9):
-                var = var + '\t' + str(self.get_grid(i, j).get_value())
-            print (var)
-
-    def get_row(self, row):
-        return self.matrix[row]
-
-    
-if __name__ == "__main__":
-    generator = Generator()
-    generator.print_matrix()
