@@ -19,6 +19,7 @@ EASY_VALUES = {BOTTOM: 30, TOP: 40}
 MEDIUM_VALUES = {BOTTOM: 40, TOP: 60}
 HARD_VALUES = {BOTTOM: 60, TOP: 70}
 
+# Levels
 LEVEL_EASY = 	'Easy'
 LEVEL_MEDIUM = 	'Medium'
 LEVEL_HARD = 	'Hard'
@@ -36,6 +37,8 @@ ALGORITHM_NORVIG = 'Norvig'
 MAP_ROW = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F",
            6: "G", 7: "H", 8: "I"}
 # Xpath locator to get values of the config.xml
-
-#
+XPATH_OUTPUT = ".//path_output"
+XPATH_ALGORITHM = ".//algorithm"
+XPATH_LEVEL = ".//difficulty/level"
+XPATH_HOLES_NUMBER = ".//difficulty/level/limits_holes"
 
