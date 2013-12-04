@@ -8,9 +8,9 @@ class Cell():
         Keyword arguments:
 
         visible -- status of cell to hide or display the value in the matrix
-        value   -- value of cell it can be a number between 1 and 9
-        row     -- it is the position en the row matrix [A, B, C, D, E, F, G, H, I]
-        column  -- It is the position en the column matrix [1, 2, 3, 4, 5, 6, 7, 8, 9,]
+        value -- value of cell it can be a number between 1 and 9
+        row  -- it is the position en the row matrix [A, B, C, D, E, F, G, H, I]
+        column      It is the position en the column matrix [1, 2, 3, 4, 5, 6, 7, 8, 9,]
 
         """
         self.visible = visible
@@ -34,6 +34,3 @@ class Cell():
         self.row = row
         self.column = column
 
-
-if __name__ == "__main__":
-    c = Cell(6, True, "B")

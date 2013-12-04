@@ -99,7 +99,7 @@ class Input():
             if(line[column] == "." or line[column] == "0"):
                 list_row.append(Cell(0, True, MAP_ROW[row_position], column))
             else:
-                list_row.append(Cell(int(line[column]), False, MAP_ROW[row_position], column))
+                list_row.append(Cell(line[column], False, MAP_ROW[row_position], column))
 
         return list_row
 
