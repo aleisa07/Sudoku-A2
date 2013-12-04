@@ -24,6 +24,14 @@ def is_valid_path(path):
     """
     return os.path.isabs(path)
 
+def exist_file(path_file):
+    """Return true if a specific file esist is the path
+
+    Keyword arguments:
+    path_file -- name of the path to be verified
+
+    """
+    return os.path.isfile(path_file)
 
 def print_key_and_values_from_a_dictionary(dictionary):
     """Print the key and values from a dictionary
@@ -35,7 +43,7 @@ def print_key_and_values_from_a_dictionary(dictionary):
     """
     order_map = OrderedDict(sorted(dictionary.items(), key=lambda t: t[0]))
     for key, value in order_map.iteritems():
-        print key + " : " + value
+        print (key + " : " + value)
 
 
 def cross(list_a, list_b):
