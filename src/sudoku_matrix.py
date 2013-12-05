@@ -73,10 +73,10 @@ class SudokuMatrix(object):
             for j in range(9):
                 if j % 3 == 0:
                     var += "| "
-                if self.matrix[i][j].get_cell_value() == 0:
+                if self.sudoku_matrix[i][j].get_cell_value() == 0:
                     var += "."
                 else:
-                    var += str(self.matrix[i][j].get_cell_value())
+                    var += str(self.sudoku_matrix[i][j].get_cell_value())
                 var += " "
             print var + "|"
         print "  +-------+-------+-------+ \n"
