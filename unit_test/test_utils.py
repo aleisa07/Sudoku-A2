@@ -1,5 +1,8 @@
+import sys
+sys.path.append('../src')
+
 import unittest
-import src.utils
+import utils
 
 __author__ = 'Carlos Gonzales'
 
@@ -8,19 +11,19 @@ class TestUtilsMethods(unittest.TestCase):
 
     def test_verify_if_exist_a_path(self):
         path = "../src"
-        self.assertTrue(src.utils.exist_path(path))
+        self.assertTrue(utils.exist_path(path))
 
     def test_verify_if_do_not_exist_a_path(self):
         path = "path/not/exist"
-        self.assertFalse(src.utils.exist_path(path))
+        self.assertFalse(utils.exist_path(path))
 
     def test_verify_if_a_path_is_valid(self):
-        path = "c:\\unit_test"
-        self.assertTrue(src.utils.is_valid_path(path))
+        path = "/home/carledriss/unit_test"
+        self.assertTrue(utils.is_valid_path(path))
 
     def test_verify_if_a_path_is_not_valid(self):
         path = "testing?"
-        self.assertFalse(src.utils.is_valid_path(path))
+        self.assertFalse(utils.is_valid_path(path))
 
     def test_verify_that_the_cross_method_generate_the_peers(self):
         self.cols = '123456789'
@@ -34,7 +37,7 @@ class TestUtilsMethods(unittest.TestCase):
                           'G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9',
                           'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9',
                           'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9']
-        self.assertEqual(expected_peers, src.utils.cross(self.rows, self.cols))
+        self.assertEqual(expected_peers, utils.cross(self.rows, self.cols))
 
 if __name__ == '__main__':
     unittest.main()
