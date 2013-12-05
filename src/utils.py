@@ -1,4 +1,3 @@
-from collections import OrderedDict
 import os
 import random
 
@@ -24,6 +23,7 @@ def is_valid_path(path):
     """
     return os.path.isabs(path)
 
+
 def exist_file(path_file):
     """Return true if a specific file esist is the path
 
@@ -32,18 +32,6 @@ def exist_file(path_file):
 
     """
     return os.path.isfile(path_file)
-
-def print_key_and_values_from_a_dictionary(dictionary):
-    """Print the key and values from a dictionary
-    key : value
-
-    Keyword arguments:
-    dictionary -- name of the dictionary to be printed
-
-    """
-    order_map = OrderedDict(sorted(dictionary.items(), key=lambda t: t[0]))
-    for key, value in order_map.iteritems():
-        print (key + " : " + value)
 
 
 def cross(list_a, list_b):

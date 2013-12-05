@@ -1,5 +1,5 @@
 
-class Cell():
+class Cell(object):
 
     def __init__(self, value, visible, row, column):
         """Initialize a cell to be part of matrix

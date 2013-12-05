@@ -2,7 +2,7 @@ import utils
 import xml.etree.ElementTree as ET
 
 
-class ConfigXML():
+class ConfigXML(object):
     def __init__(self, file_name="../config.xml"):
         """Constructor that sets the file_name of the configuration file.
 

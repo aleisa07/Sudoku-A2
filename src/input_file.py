@@ -1,13 +1,11 @@
-import random
-import os
-import os.path
 import csv
 from constant import MAP_ROW
 from cell import Cell
 import utils
 
-class Input():
-    """ Read from a txt or csv file the contentand and put in a matrix of cells"""
+
+class Input(object):
+    """ Read from a txt or csv file the content and put in a matrix of cells"""
 
     def __init__(self, path_file):
         """This class read matrix from txt or csv file
@@ -18,7 +16,6 @@ class Input():
         self.path_file = path_file
         if(utils.exist_file(path_file)):
             self.fill_matrix_from_input_file()
-
 
     def fill_matrix_from_input_file(self):
         """ Select the type of file is send to fill the matrix
@@ -103,25 +100,5 @@ class Input():
 
         return list_row
 
-    def test_values_were_load_correctly(self):
-        expected_matrix =[[1,0,3,4,5,0,7,8,0],
-                          [0,5,6,7,8,0,1,0,3],
-                          [7,0,9,1,2,3,4,5,6],
-                          [2,0,4,5,6,7,0,9,1],
-                          [5,6,7,8,9,1,2,0,4],
-                          [8,9,0,2,0,4,0,6,7],
-                          [3,4,5,6,7,8,0,1,2],
-                          [6,0,8,9,1,0,3,4,5],
-                          [9,0,3,2,4,0,6,0,0]]
-
-        for row in range(9):
-            for column in range(9):
-                if (str(self.matrix[row][column].get_cell_value()) == str(expected_matrix[row][column])):
-                    print(str(self.matrix[row][column].get_cell_value())+"="+str(expected_matrix[row][column]))
-                else:
-                    print ("no iguales")
-
-#i = Input("../input_files/file.txt")
-#i.test_values_were_load_correctly()
 
 

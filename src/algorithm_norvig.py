@@ -1,6 +1,5 @@
-from collections import OrderedDict
-from src.algorithm_base import AlgorithmBase
-from src.sudoku_matrix import SudokuMatrix
+from algorithm_base import AlgorithmBase
+from sudoku_matrix import SudokuMatrix
 import utils
 
 
@@ -20,11 +19,11 @@ class AlgorithmNorvig(AlgorithmBase):
             [utils.cross(rows, columns) for rows in ('ABC', 'DEF', 'GHI')
              for columns in ('123', '456', '789')])
         self.unit_dict_squares = dict(
-            (square, [unit for unit in self.unit_list if square in unit]) for
-            square in self.list_squares)
+            (square, [unit for unit in self.unit_list if square in unit]) for square in
+            self.list_squares)
         self.peers_set_squares = dict((square, set(
-            sum(self.unit_dict_squares[square], [])) - set([square])) for
-            square in self.list_squares)
+            sum(self.unit_dict_squares[square], [])) - set([square])) for square in
+                                      self.list_squares)
 
     def solve(self, sudoku_matrix):
         """
@@ -53,9 +52,7 @@ class AlgorithmNorvig(AlgorithmBase):
                 key = self.row_list[row] + self.digit_list[column]
                 value = sudoku_matrix.get_cell(row, column).get_cell_value()
                 sudoku_dictionary[key] = str(value)
-        order_map = OrderedDict(
-            sorted(sudoku_dictionary.items(), key=lambda t: t[0]))
-        return order_map
+        return sudoku_dictionary
 
     def convert_dict_to_matrix(self, sudoku_dict):
         """
@@ -67,14 +64,17 @@ class AlgorithmNorvig(AlgorithmBase):
         """
         sudoku_matrix = SudokuMatrix()
         row_i = 0
-        for row in self.row_list:
-            column_j = 0
-            for col in self.column_list:
-                sudoku_matrix.set_cell_value(row_i, column_j,
-                                             sudoku_dict[row + col])
-                column_j += 1
-            row_i += 1
-        return sudoku_matrix
+
+        try:
+            for row in self.row_list:
+                column_j = 0
+                for col in self.column_list:
+                    sudoku_matrix.set_cell_value(row_i, column_j, sudoku_dict[row + col])
+                    column_j += 1
+                row_i += 1
+            return sudoku_matrix
+        except TypeError:
+            return "Invalid dictionary.  Try again..."
 
     def get_dict_values_possible(self, dict_values):
         """Convert a sudoku dict values to a dict of possible values,
@@ -89,9 +89,7 @@ class AlgorithmNorvig(AlgorithmBase):
         dict_values_possible = dict(
             (key, self.digit_list) for key in self.list_squares)
         for key, value in dict_values.items():
-            if value in self.digit_list and not self.assign(
-                    dict_values_possible,
-                    key, value):
+            if value in self.digit_list and not self.assign(dict_values_possible, key, value):
                 return False  # (Fail if we can't assign value to square.)
         return dict_values_possible
 
@@ -109,12 +107,10 @@ class AlgorithmNorvig(AlgorithmBase):
 
         # Choose the unfilled square key with the fewest possibilities
         number, key = min(
-            (len(dict_values[key]), key) for key in self.list_squares if
-            len(dict_values[key]) > 1)
+            (len(dict_values[key]), key) for key in self.list_squares if len(dict_values[key]) > 1)
 
         return utils.get_element_exists_in_sequence(
-            self.search(self.assign(dict_values.copy(), key, value)) for value
-            in dict_values[key])
+            self.search(self.assign(dict_values.copy(), key, value)) for value in dict_values[key])
 
     def assign(self, dict_values, key, value):
         """Eliminate all the other values (except value) from values[key]
@@ -128,8 +124,7 @@ class AlgorithmNorvig(AlgorithmBase):
 
         """
         other_values = dict_values[key].replace(value, '')
-        if all(self.eliminate(dict_values, key, other_value) for other_value in
-               other_values):
+        if all(self.eliminate(dict_values, key, other_value) for other_value in other_values):
             return dict_values
         else:
             return False
@@ -154,14 +149,12 @@ class AlgorithmNorvig(AlgorithmBase):
             return False  # Contradiction: removed last value
         elif len(dict_values[key]) == 1:
             other_value = dict_values[key]
-            if not all(self.eliminate(dict_values, other_key, other_value) for
-                       other_key in self.peers_set_squares[key]):
+            if not all(self.eliminate(dict_values, other_key, other_value) for other_key in
+                       self.peers_set_squares[key]):
                 return False
-        return self.get_dict_values_reduced_to_only_one_place(dict_values, key,
-                                                              value)
+        return self.get_dict_values_reduced_to_only_one_place(dict_values, key, value)
 
-    def get_dict_values_reduced_to_only_one_place(self, dict_values, key,
-                                                  value):
+    def get_dict_values_reduced_to_only_one_place(self, dict_values, key, value):
         """Get the dictionary of values reduced to only one place
 
         Keyword arguments:

@@ -1,11 +1,14 @@
+import sys
+sys.path.append('../src')
+
 import unittest
-from src.config_xml import ConfigXML
-from src.constant import *
+from config_xml import ConfigXML
+from constant import *
 
 __author__ = 'Carlos Gonzales'
 
 
-class TestConfigXML(unittest.TestCase):
+class TestConfigXMLSet(unittest.TestCase):
     def setUp(self):
         self.config_xml = ConfigXML("config_set.xml")
 

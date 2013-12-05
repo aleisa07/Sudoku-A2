@@ -1,18 +1,21 @@
-from src.constant import *
-import src.utils
+import sys
+sys.path.append('../src')
+
+from constant import *
+import utils
 import unittest
-from src.config_xml import ConfigXML
+from config_xml import ConfigXML
 
 __author__ = 'Carlos Gonzales'
 
 
-class TestConfigXML(unittest.TestCase):
+class TestConfigXMLGet(unittest.TestCase):
 
     def setUp(self):
         self.config_xml = ConfigXML("config.xml")
 
     def test_verify_if_config_xml_exist(self):
-        self.assertTrue(src.utils.exist_path(self.config_xml.file_name))
+        self.assertTrue(utils.exist_path(self.config_xml.file_name))
 
     def test_verify_that_is_possible_to_get_the_output_value(self):
         expected_value = "c:\\"

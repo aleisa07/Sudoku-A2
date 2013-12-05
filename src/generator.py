@@ -1,10 +1,9 @@
-import random
 from cell import Cell
 from constant import MAP_ROW
 import utils
 
 
-class Generator():
+class Generator(object):
 
     def __init__(self):
         """This class generate a matrix 9x9 with Cell Objects"""

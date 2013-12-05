@@ -16,10 +16,10 @@ class Backtracking(AlgorithmBase):
         keyword arguments 
         sudoku_matrix -- Sudoku Matrix object without solution
         """
-        self.matrix = sudoku_matrix.matrix
+        self.matrix = sudoku_matrix.sudoku_matrix
         self.solve_in_line(0, 0)
         sudoku_matrix = SudokuMatrix()
-        sudoku_matrix.set_matrix(self.matrix)
+        sudoku_matrix.set_sudoku_matrix(self.matrix)
         return sudoku_matrix   
 
     def solve_in_line(self, row, col):

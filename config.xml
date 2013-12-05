@@ -1,10 +1,9 @@
 <sudoku_config>
-    <type value="medium" />
     <path_output value="c:\" />
-    <algorithm value="backtracking" />
+    <algorithm value="BackTracking" />
     <difficulty>
-		<level value="custom">
+        <level value="Custom">
             <limits_holes max="60" min="20" />
-		</level>
-	</difficulty>
+        </level>
+    </difficulty>
 </sudoku_config>

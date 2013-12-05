@@ -11,12 +11,3 @@ class AlgorithmSolver(object):
 
         """
         return self.algorithm.solve(sudoku_matrix)
-    
-    def change_algorithm(self, new_algorithm):
-        """Method to change the algorithm.
-
-        Keyword arguments:
-        sudoku_matrix -- Sudoku Matrix Object
-
-        """
-        self.algorithm = new_algorithm

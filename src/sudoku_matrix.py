@@ -1,14 +1,13 @@
 import random
-from cell import Cell
 from constant import *
 from generator import Generator
 from input_file import Input
 import copy
 
 
-class SudokuMatrix():
+class SudokuMatrix(object):
 
-    dificult = LEVEL_EASY
+    difficult = LEVEL_EASY
 
     def __init__(self, source=None):
         """Set the sudoku matrix with values generated or load from txt or csv files
@@ -20,7 +19,7 @@ class SudokuMatrix():
 
         if (source == None):
             generator = Generator()
-            dificult = self.get_cells_to_hide(self.dificult)
+            dificult = self.get_cells_to_hide(self.difficult)
             self.sudoku_matrix = generator.get_matrix()
             self.sudoku_matrix_solved = copy.copy(self.sudoku_matrix)
             self.hide_values_in_matrix(dificult)
@@ -63,29 +62,37 @@ class SudokuMatrix():
         return self.sudoku_matrix[row]
 
     def print_sudoku_matrix(self):
-        """Print the sudoku matrix in the console
-        """
-        for row in range(len(self.sudoku_matrix)):
-            var = ""
-            for column in range(9):
-                if (self.sudoku_matrix[row][column].get_cell_visibility() == True):
-                    var = var + '\t' + "."
-                else:
-                    var = var + '\t' + str(self.sudoku_matrix[row][column].get_cell_value())
-            print (var)
+        """Print the sudoku matrix in the console"""
+        row_list = 'ABCDEFGHI'
 
-    def hide_values_in_matrix(self, dificult):
+        print "    1 2 3   4 5 6   7 8 9 "
+        for i in range(9):
+            if i % 3 == 0:
+                print "  +-------+-------+-------+"
+            var = row_list[i] + " "
+            for j in range(9):
+                if j % 3 == 0:
+                    var += "| "
+                if self.matrix[i][j].get_cell_value() == 0:
+                    var += "."
+                else:
+                    var += str(self.matrix[i][j].get_cell_value())
+                var += " "
+            print var + "|"
+        print "  +-------+-------+-------+ \n"
+
+    def hide_values_in_matrix(self, difficult):
         """Hide cell in the Sudoku Matrix 
 
         Keyword arguments:
-        dificult   --   Number of cells to hide in the sudoku matrix
+        difficult   --   Number of cells to hide in the sudoku matrix
         """
         row = random.randint(0, 8)
         column = random.randint(0, 8)
-        if (dificult != 0):
+        if (difficult != 0):
             self.sudoku_matrix[row][column].set_cell_visibility(True)
             self.sudoku_matrix[row][column].set_cell_value(0)
-            self.hide_values_in_matrix(dificult - 1)
+            self.hide_values_in_matrix(difficult - 1)
         else:
             pass
 
@@ -95,6 +102,7 @@ class SudokuMatrix():
         Keyword arguments:
         level   --      Level of sudoku game it can be "Easy", "Medium", "Hard"
         return  --      Number of cells to hide
+
         """
         level = LEVEL[level]
         bottom = level[BOTTOM]
@@ -102,37 +110,30 @@ class SudokuMatrix():
         return random.randint(bottom, top)
 
     def get_sudoku_matrix(self):
-        """Return a sudoku matrix 
-        """
+        """Return a sudoku matrix """
         return self.sudoku_matrix
 
     def get_sudoku_matrix_solved(self):
-        """Return a sudoku matrix solved
-        """
+        """Return a sudoku matrix solved"""
         return self.sudoku_matrix_solved
 
-    def __eq__(self, other):
+    def __eq__(self, other_sudoku_matrix):
+        """Method that compare if two SudokuMatrix object are equals
+
+        Keyword arguments:
+        other_sudoku_matrix -- Sudoku Matrix object to compare
+
+        """
         equals = False
         for row in range(9):
             for col in range(9):
                 if int(self.get_cell(row, col).get_cell_value()) == int(
-                        other.get_cell(row, col).get_cell_value()):
+                        other_sudoku_matrix.get_cell(row, col).get_cell_value()):
                     equals = True
                 else:
                     return False
         return equals
 
-
-if __name__ == "__main__":
-    print("    -----------FROM GENERATOR--------")
-    generator = SudokuMatrix()
-    generator.print_sudoku_matrix()
-    print("    -----------FROM CSV FILE---------")
-    csv = SudokuMatrix("../input_files/file.csv")
-    csv.print_sudoku_matrix()
-    print("    -----------FROM TXT FILE---------")
-    txt = SudokuMatrix("../input_files/file.txt")
-    txt.print_sudoku_matrix()
 
 
 
