@@ -14,6 +14,7 @@ class testBacktracking(unittest.TestCase):
 
     def setUp(self):
         self.solver = AlgorithmSolver(Backtracking())
+        self.sudoku_matrix = SudokuMatrix()
 
     def test_solve_sudoku_using_backtracking_algorithm(self):
         """
@@ -211,8 +212,13 @@ class testBacktracking(unittest.TestCase):
         sudoku_without_solution.set_cell_value(8, 7, 7)
         sudoku_without_solution.set_cell_value(8, 8, 4)
 
-        solved_sudoku = self.solver.solve(sudoku_without_solution)
+        solved_sudoku, time = self.solver.solve(sudoku_without_solution)
         self.assertTrue(sudoku_with_solution == solved_sudoku)
+
+    def test_timer_using_backtracking_algorithm_is_not_00_seconds(self):
+
+        values, time_result = self.solver.solve(self.sudoku_matrix)
+        self.assertFalse(float(time_result) == 0.0)
 
 
 if __name__ == "__main__":

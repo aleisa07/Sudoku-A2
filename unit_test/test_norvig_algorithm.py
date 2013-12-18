@@ -12,6 +12,7 @@ __author__ = 'Carlos Gonzales'
 class TestNorvigAlgorithm(unittest.TestCase):
     def setUp(self):
         self.solver = AlgorithmSolver(AlgorithmNorvig())
+        self.sudoku_matrix = SudokuMatrix()
 
     def test_verify_that_the_algorithm_norvig_solve_a_sudoku_matrix_object(
             self):
@@ -210,7 +211,7 @@ class TestNorvigAlgorithm(unittest.TestCase):
         sudoku_without_solution.set_cell_value(8, 7, 0)
         sudoku_without_solution.set_cell_value(8, 8, 4)
 
-        solved_sudoku = self.solver.solve(sudoku_without_solution)
+        solved_sudoku, time = self.solver.solve(sudoku_without_solution)
         self.assertTrue(sudoku_with_solution == solved_sudoku)
 
     def test_verify_that_the_algorithm_norvig_solve_a_sudoku_matrix_object_trying_all_the_possible_values(
@@ -520,8 +521,13 @@ class TestNorvigAlgorithm(unittest.TestCase):
         sudoku_without_solution.set_cell_value(8, 7, 7)
         sudoku_without_solution.set_cell_value(8, 8, 4)
 
-        self.assertEquals("Invalid dictionary.  Try again...",
-                          self.solver.solve(sudoku_without_solution))
+        exception, time = self.solver.solve(sudoku_without_solution)
+
+        self.assertEquals("Invalid dictionary.  Try again...", exception)
+
+    def test_timer_using_norvig_algorithm_is_not_00_seconds(self):
+        values, time_result = self.solver.solve(self.sudoku_matrix)
+        self.assertFalse(float(time_result) == 0.0)
 
 if __name__ == '__main__':
     unittest.main()

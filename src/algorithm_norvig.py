@@ -1,4 +1,5 @@
 from algorithm_base import AlgorithmBase
+from algorithm_solver import time_decorator
 from sudoku_matrix import SudokuMatrix
 import utils
 
@@ -25,6 +26,7 @@ class AlgorithmNorvig(AlgorithmBase):
             sum(self.unit_dict_squares[square], [])) - set([square])) for square in
                                       self.list_squares)
 
+    @time_decorator
     def solve(self, sudoku_matrix):
         """
         Return a solved Sudoku Matrix object using the algorithm Norvig

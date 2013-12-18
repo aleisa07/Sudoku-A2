@@ -1,5 +1,6 @@
 from algorithm_base import AlgorithmBase
 from sudoku_matrix import SudokuMatrix
+from algorithm_solver import time_decorator
 
 
 class Backtracking(AlgorithmBase):
@@ -9,6 +10,7 @@ class Backtracking(AlgorithmBase):
         """
         self.matrix = None
 
+    @time_decorator
     def solve(self, sudoku_matrix):
         """
         Return a solved Sudoku Matrix object using the algorithm Backtracking
